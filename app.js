@@ -23,6 +23,15 @@ io.on("connection", socket => {
   socket.on("players", room => {
     io.to(room).emit("players", PLAYER_POSITIONS[room]);
   });
+
+  socket.on("move", data => {
+    console.log(data);
+    PLAYER_POSITIONS[data.room][data.player] = data.newSpace;
+    io.to(data.room).emit("newTurn", {
+      newSpaces: PLAYER_POSITIONS[data.room],
+      newTurn: data.turn
+    });
+  });
 });
 
 http.listen(4000, () => {
