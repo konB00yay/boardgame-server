@@ -1,12 +1,19 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+const path = require("path");
+app.use(express.static(path.join(__dirname, "build")));
 
 let port = process.env.PORT || 4000;
 
 var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
+
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 io.on("connection", socket => {
   socket.on("rooms", room => {

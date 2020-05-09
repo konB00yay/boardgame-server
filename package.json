@@ -12,6 +12,7 @@
     "http": "0.0.1-security",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "path": "^0.12.7",
     "pug": "^2.0.4",
     "shortid": "^2.2.15",
     "socket.io": "^2.3.0"
