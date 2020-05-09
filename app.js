@@ -2,6 +2,8 @@ const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 
+let port = process.env.PORT || 4000;
+
 var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
@@ -70,8 +72,14 @@ io.on("connection", socket => {
       positions: PLAYER_POSITIONS[data.room]
     });
   });
+
+  socket.on("rolled", data => {
+    io.to(data.room).emit("displayRoll", {
+      roll: data.roll
+    });
+  });
 });
 
-http.listen(4000, () => {
-  console.log("listening on *:4000");
+http.listen(port, () => {
+  console.log("listening on *:" + port);
 });
