@@ -3,17 +3,19 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const path = require("path");
-app.use(express.static(path.join(__dirname, "build")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "build")));
+  app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  });
+}
 
 let port = process.env.PORT || 4000;
 
 var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
-
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 io.on("connection", socket => {
   socket.on("rooms", room => {
@@ -43,7 +45,7 @@ io.on("connection", socket => {
   socket.on("move", data => {
     PLAYER_POSITIONS[data.room][data.player] = data.newSpace;
     io.to(data.room).emit("moved", {
-      newSpaces: PLAYER_POSITIONS[data.room]
+      positions: PLAYER_POSITIONS[data.room]
     });
   });
 
@@ -75,7 +77,7 @@ io.on("connection", socket => {
 
   socket.on("resetPlayer", data => {
     PLAYER_POSITIONS[data.room][data.player] = 1;
-    io.to(data.room).emit("playerReset", {
+    io.to(data.room).emit("moved", {
       positions: PLAYER_POSITIONS[data.room]
     });
   });
@@ -84,6 +86,27 @@ io.on("connection", socket => {
     io.to(data.room).emit("displayRoll", {
       roll: data.roll
     });
+  });
+
+  socket.on("removePlayer", data => {
+    PLAYER_POSITIONS[data.room][data.player] = "REMOVED";
+    io.to(data.room).emit("moved", {
+      positions: PLAYER_POSITIONS[data.room]
+    });
+  });
+
+  socket.on("lonePlayer", lobby => {
+    PLAYER_COUNTER[lobby] = 1;
+    PLAYER_POSITIONS[lobby] = {};
+    PLAYER_POKEMON[lobby] = {};
+    PLAYER_POSITIONS[lobby][1] = 1;
+    PLAYER_POKEMON[lobby][1] = null;
+  });
+
+  socket.on("deleteRoom", lobby => {
+    delete PLAYER_COUNTER[lobby];
+    delete PLAYER_POSITIONS[lobby];
+    delete PLAYER_POKEMON[lobby];
   });
 });
 
