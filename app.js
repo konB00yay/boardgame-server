@@ -17,6 +17,12 @@ var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
 
+setInterval(function() {
+  PLAYER_COUNTER = {};
+  PLAYER_POSITIONS = {};
+  PLAYER_POKEMON = {};
+}, 6 * 60 * 60 * 1000);
+
 io.on("connection", socket => {
   socket.on("rooms", room => {
     const lobby = room.id;
