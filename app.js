@@ -17,11 +17,11 @@ var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
 
-setInterval(function() {
-  PLAYER_COUNTER = {};
-  PLAYER_POSITIONS = {};
-  PLAYER_POKEMON = {};
-}, 6 * 60 * 60 * 1000);
+function resetRoom(roomId) {
+  delete PLAYER_COUNTER[roomId];
+  delete PLAYER_POKEMON[roomId];
+  delete PLAYER_POSITIONS[roomId];
+}
 
 io.on("connection", socket => {
   socket.on("rooms", room => {
@@ -33,7 +33,9 @@ io.on("connection", socket => {
       PLAYER_POKEMON[lobby] = {};
       PLAYER_POSITIONS[lobby][1] = 1;
       PLAYER_POKEMON[lobby][1] = null;
+      setTimeout(resetRoom, 4 * 60 * 60 * 1000, lobby);
     } else {
+      //Reject join if room does not exist
       PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
       PLAYER_POSITIONS[lobby][PLAYER_COUNTER[lobby]] = 1;
       PLAYER_POKEMON[lobby][PLAYER_COUNTER[lobby]] = null;
