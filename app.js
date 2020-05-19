@@ -35,14 +35,16 @@ io.on("connection", socket => {
       PLAYER_POKEMON[lobby][1] = null;
       setTimeout(resetRoom, 4 * 60 * 60 * 1000, lobby);
     } else {
-      //Reject join if room does not exist
-      PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
-      PLAYER_POSITIONS[lobby][PLAYER_COUNTER[lobby]] = 1;
-      PLAYER_POKEMON[lobby][PLAYER_COUNTER[lobby]] = null;
-      io.to(lobby).emit("joined", {
-        positions: PLAYER_POSITIONS[lobby],
-        pokemon: PLAYER_POKEMON[lobby]
-      });
+      let keys = Object.keys(PLAYER_COUNTER);
+      if (keys.includes(lobby) && PLAYER_COUNTER[lobby] < 9) {
+        PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
+        PLAYER_POSITIONS[lobby][PLAYER_COUNTER[lobby]] = 1;
+        PLAYER_POKEMON[lobby][PLAYER_COUNTER[lobby]] = null;
+        io.to(lobby).emit("joined", {
+          positions: PLAYER_POSITIONS[lobby],
+          pokemon: PLAYER_POKEMON[lobby]
+        });
+      }
     }
   });
 
@@ -53,7 +55,8 @@ io.on("connection", socket => {
   socket.on("move", data => {
     PLAYER_POSITIONS[data.room][data.player] = data.newSpace;
     io.to(data.room).emit("moved", {
-      positions: PLAYER_POSITIONS[data.room]
+      positions: PLAYER_POSITIONS[data.room],
+      battling: data.battling
     });
   });
 
@@ -115,6 +118,24 @@ io.on("connection", socket => {
     delete PLAYER_COUNTER[lobby];
     delete PLAYER_POSITIONS[lobby];
     delete PLAYER_POKEMON[lobby];
+  });
+
+  socket.on("battleRolledOne", data => {
+    io.to(data.room).emit("battleRollOne", {
+      roll: data.battleRollOne
+    });
+  });
+
+  socket.on("battleRolledTwo", data => {
+    io.to(data.room).emit("battleRollTwo", {
+      roll: data.battleRollTwo
+    });
+  });
+
+  socket.on("newBattle", data => {
+    io.to(data.room).emit("newBattlePlayer", {
+      battling: data.battling
+    });
   });
 });
 
