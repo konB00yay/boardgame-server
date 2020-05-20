@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
-const io = require("socket.io")(http);
+const io = require("socket.io")(http, { pingTimeout: 600000 });
 const path = require("path");
 
 if (process.env.NODE_ENV === "production") {
