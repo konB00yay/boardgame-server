@@ -1,35 +1,47 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "81c39b6caa7e96067c1ca49995ba9bb4",
+    "revision": "62384d79632a75a1af42ef1f0fd35e54",
     "url": "/index.html"
   },
   {
-    "revision": "fcab9cfc99a660bf8781",
-    "url": "/static/css/2.69121389.chunk.css"
+    "revision": "6cf46ac48f355ac249b9",
+    "url": "/static/css/2.4819d237.chunk.css"
   },
   {
-    "revision": "9c12b3bd98346f780732",
-    "url": "/static/css/main.ad97567f.chunk.css"
+    "revision": "bf63dbc5f3a576675f37",
+    "url": "/static/css/main.a26d65df.chunk.css"
   },
   {
-    "revision": "fcab9cfc99a660bf8781",
-    "url": "/static/js/2.43e19b0d.chunk.js"
+    "revision": "6cf46ac48f355ac249b9",
+    "url": "/static/js/2.fff190fc.chunk.js"
   },
   {
-    "revision": "d0550c944a9928585a31b6efc1a5d942",
-    "url": "/static/js/2.43e19b0d.chunk.js.LICENSE.txt"
+    "revision": "bab979f0996c4f83a712fc8810462bad",
+    "url": "/static/js/2.fff190fc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9c12b3bd98346f780732",
-    "url": "/static/js/main.896edcca.chunk.js"
+    "revision": "bf63dbc5f3a576675f37",
+    "url": "/static/js/main.a2b353ee.chunk.js"
   },
   {
     "revision": "a4724cc4c18676373579",
     "url": "/static/js/runtime-main.36289ee7.js"
   },
   {
+    "revision": "883bacb7162e64cc5d76e408efd0a554",
+    "url": "/static/media/bulbasaur.883bacb7.png"
+  },
+  {
+    "revision": "7907fa1f5c66d1b285b7ea446a4dee18",
+    "url": "/static/media/charmander.7907fa1f.png"
+  },
+  {
     "revision": "73a011237bccdb922d5874c0e984ac6a",
     "url": "/static/media/introBoard.73a01123.png"
+  },
+  {
+    "revision": "20a6d4820bb18c93274885a6d737269a",
+    "url": "/static/media/pikachu.20a6d482.png"
   },
   {
     "revision": "ed8bb36a3c6395c219eded0ab3139701",
@@ -354,5 +366,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "b3bbab419dd75ac81dc1d1fc335146c3",
     "url": "/static/media/space_81_intro_9.b3bbab41.png"
+  },
+  {
+    "revision": "9b25e5bcde7d2c36ace08b8ab1031789",
+    "url": "/static/media/squirtle.9b25e5bc.png"
   }
 ]);
