@@ -49,7 +49,10 @@ io.on("connection", socket => {
   });
 
   socket.on("players", room => {
-    io.to(room).emit("players", PLAYER_POSITIONS[room]);
+    io.to(room).emit("players", {
+      positions: PLAYER_POSITIONS[room],
+      pokemon: PLAYER_POKEMON[room]
+    });
   });
 
   socket.on("move", data => {
