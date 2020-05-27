@@ -28,7 +28,7 @@ io.on("connection", socket => {
   socket.on("rooms", room => {
     const lobby = room.id;
     socket.join(lobby);
-    if (room.action == "create") {
+    if (room.action === "create") {
       console.log("Creating room: " + lobby);
       PLAYER_COUNTER[lobby] = 1;
       PLAYER_POSITIONS[lobby] = {};
@@ -40,6 +40,7 @@ io.on("connection", socket => {
       let keys = Object.keys(PLAYER_COUNTER);
       if (keys.includes(lobby) && PLAYER_COUNTER[lobby] < 9) {
         console.log("Joining room: " + lobby);
+        console.log("Action: " + room.action);
         PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
         PLAYER_POSITIONS[lobby][PLAYER_COUNTER[lobby]] = 1;
         PLAYER_POKEMON[lobby][PLAYER_COUNTER[lobby]] = null;
