@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.a26d65df.chunk.css",
-    "main.js": "/static/js/main.c4a7716c.chunk.js",
-    "main.js.map": "/static/js/main.c4a7716c.chunk.js.map",
+    "main.css": "/static/css/main.cec4bc7f.chunk.css",
+    "main.js": "/static/js/main.042b251d.chunk.js",
+    "main.js.map": "/static/js/main.042b251d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.36289ee7.js",
     "runtime-main.js.map": "/static/js/runtime-main.36289ee7.js.map",
     "static/css/2.4819d237.chunk.css": "/static/css/2.4819d237.chunk.css",
-    "static/js/2.c687e0c5.chunk.js": "/static/js/2.c687e0c5.chunk.js",
-    "static/js/2.c687e0c5.chunk.js.map": "/static/js/2.c687e0c5.chunk.js.map",
+    "static/js/2.e50cabba.chunk.js": "/static/js/2.e50cabba.chunk.js",
+    "static/js/2.e50cabba.chunk.js.map": "/static/js/2.e50cabba.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.a0668f9486900698207e35296a3034dc.js": "/precache-manifest.a0668f9486900698207e35296a3034dc.js",
+    "precache-manifest.c485a0698fcb8c5947afde109af5dddf.js": "/precache-manifest.c485a0698fcb8c5947afde109af5dddf.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.4819d237.chunk.css.map": "/static/css/2.4819d237.chunk.css.map",
-    "static/css/main.a26d65df.chunk.css.map": "/static/css/main.a26d65df.chunk.css.map",
-    "static/js/2.c687e0c5.chunk.js.LICENSE.txt": "/static/js/2.c687e0c5.chunk.js.LICENSE.txt",
+    "static/css/main.cec4bc7f.chunk.css.map": "/static/css/main.cec4bc7f.chunk.css.map",
+    "static/js/2.e50cabba.chunk.js.LICENSE.txt": "/static/js/2.e50cabba.chunk.js.LICENSE.txt",
     "static/media/bulbasaur.png": "/static/media/bulbasaur.883bacb7.png",
     "static/media/charmander.png": "/static/media/charmander.7907fa1f.png",
+    "static/media/haunter.png": "/static/media/haunter.7222edc1.png",
     "static/media/introBoard.png": "/static/media/introBoard.73a01123.png",
     "static/media/pikachu.png": "/static/media/pikachu.20a6d482.png",
     "static/media/space_01.png": "/static/media/space_01.ed8bb36a.png",
@@ -104,8 +105,8 @@
   "entrypoints": [
     "static/js/runtime-main.36289ee7.js",
     "static/css/2.4819d237.chunk.css",
-    "static/js/2.c687e0c5.chunk.js",
-    "static/css/main.a26d65df.chunk.css",
-    "static/js/main.c4a7716c.chunk.js"
+    "static/js/2.e50cabba.chunk.js",
+    "static/css/main.cec4bc7f.chunk.css",
+    "static/js/main.042b251d.chunk.js"
   ]
 }

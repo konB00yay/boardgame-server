@@ -18,6 +18,7 @@ var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
 
 function resetRoom(roomId) {
+  console.log("deleting room: " + roomId);
   delete PLAYER_COUNTER[roomId];
   delete PLAYER_POKEMON[roomId];
   delete PLAYER_POSITIONS[roomId];
@@ -28,6 +29,7 @@ io.on("connection", socket => {
     const lobby = room.id;
     socket.join(lobby);
     if (room.action == "create") {
+      console.log("Creating room: " + lobby);
       PLAYER_COUNTER[lobby] = 1;
       PLAYER_POSITIONS[lobby] = {};
       PLAYER_POKEMON[lobby] = {};
@@ -37,9 +39,11 @@ io.on("connection", socket => {
     } else {
       let keys = Object.keys(PLAYER_COUNTER);
       if (keys.includes(lobby) && PLAYER_COUNTER[lobby] < 9) {
+        console.log("Joining room: " + lobby);
         PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
         PLAYER_POSITIONS[lobby][PLAYER_COUNTER[lobby]] = 1;
         PLAYER_POKEMON[lobby][PLAYER_COUNTER[lobby]] = null;
+        console.log("Players in room: " + PLAYER_COUNTER[lobby]);
         io.to(lobby).emit("joined", {
           positions: PLAYER_POSITIONS[lobby],
           pokemon: PLAYER_POKEMON[lobby]
