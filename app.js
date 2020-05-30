@@ -16,11 +16,13 @@ let port = process.env.PORT || 4000;
 var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
+var PLAYER_NAMES = {};
 
 function resetRoom(roomId) {
   delete PLAYER_COUNTER[roomId];
   delete PLAYER_POKEMON[roomId];
   delete PLAYER_POSITIONS[roomId];
+  delete PLAYER_NAMES[roomId];
 }
 
 io.on("connection", socket => {
@@ -31,8 +33,10 @@ io.on("connection", socket => {
       PLAYER_COUNTER[lobby] = 1;
       PLAYER_POSITIONS[lobby] = {};
       PLAYER_POKEMON[lobby] = {};
+      PLAYER_NAMES[lobby] = {};
       PLAYER_POSITIONS[lobby][1] = 1;
       PLAYER_POKEMON[lobby][1] = null;
+      PLAYER_NAMES[lobby][1] = null;
       setTimeout(resetRoom, 4 * 60 * 60 * 1000, lobby);
     } else {
       let keys = Object.keys(PLAYER_COUNTER);
@@ -40,9 +44,11 @@ io.on("connection", socket => {
         PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
         PLAYER_POSITIONS[lobby][PLAYER_COUNTER[lobby]] = 1;
         PLAYER_POKEMON[lobby][PLAYER_COUNTER[lobby]] = null;
+        PLAYER_NAMES[lobby][PLAYER_COUNTER[lobby]] = null;
         io.to(lobby).emit("joined", {
           positions: PLAYER_POSITIONS[lobby],
-          pokemon: PLAYER_POKEMON[lobby]
+          pokemon: PLAYER_POKEMON[lobby],
+          names: PLAYER_NAMES[lobby]
         });
       }
     }
@@ -51,7 +57,8 @@ io.on("connection", socket => {
   socket.on("players", room => {
     io.to(room).emit("players", {
       positions: PLAYER_POSITIONS[room],
-      pokemon: PLAYER_POKEMON[room]
+      pokemon: PLAYER_POKEMON[room],
+      names: PLAYER_NAMES[room]
     });
   });
 
@@ -138,6 +145,13 @@ io.on("connection", socket => {
   socket.on("newBattle", data => {
     io.to(data.room).emit("newBattlePlayer", {
       battling: data.battling
+    });
+  });
+
+  socket.on("newName", data => {
+    PLAYER_NAMES[data.room][data.player] = data.newName;
+    io.to(data.room).emit("names", {
+      names: PLAYER_NAMES[data.room]
     });
   });
 });
