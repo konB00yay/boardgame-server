@@ -17,12 +17,14 @@ var PLAYER_COUNTER = {};
 var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
 var PLAYER_NAMES = {};
+var GAME_TURN = {};
 
 function resetRoom(roomId) {
   delete PLAYER_COUNTER[roomId];
   delete PLAYER_POKEMON[roomId];
   delete PLAYER_POSITIONS[roomId];
   delete PLAYER_NAMES[roomId];
+  delete GAME_TURN[roomId];
 }
 
 io.on("connection", socket => {
@@ -37,6 +39,7 @@ io.on("connection", socket => {
       PLAYER_POSITIONS[lobby][1] = 1;
       PLAYER_POKEMON[lobby][1] = null;
       PLAYER_NAMES[lobby][1] = null;
+      GAME_TURN[lobby] = 1;
       setTimeout(resetRoom, 4 * 60 * 60 * 1000, lobby);
     } else {
       let keys = Object.keys(PLAYER_COUNTER);
@@ -58,7 +61,8 @@ io.on("connection", socket => {
     io.to(room).emit("players", {
       positions: PLAYER_POSITIONS[room],
       pokemon: PLAYER_POKEMON[room],
-      names: PLAYER_NAMES[room]
+      names: PLAYER_NAMES[room],
+      turn: GAME_TURN[room]
     });
   });
 
@@ -66,11 +70,13 @@ io.on("connection", socket => {
     PLAYER_POSITIONS[data.room][data.player] = data.newSpace;
     io.to(data.room).emit("moved", {
       positions: PLAYER_POSITIONS[data.room],
-      battling: data.battling
+      battling: data.battling,
+      caterpie: data.caterpie
     });
   });
 
   socket.on("nextTurn", data => {
+    GAME_TURN[data.room] = data.turn;
     io.to(data.room).emit("newTurn", {
       newTurn: data.turn
     });
