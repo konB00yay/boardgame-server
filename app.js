@@ -40,8 +40,25 @@ io.on("connection", socket => {
       PLAYER_POKEMON[lobby][1] = null;
       PLAYER_NAMES[lobby][1] = null;
       GAME_TURN[lobby] = 1;
-      setTimeout(resetRoom, 4 * 60 * 60 * 1000, lobby);
-    } else {
+      setTimeout(resetRoom, 5 * 60 * 60 * 1000, lobby);
+    }else if(room.action === "createDisconnect"){
+      PLAYER_COUNTER[lobby] = 1;
+      PLAYER_POSITIONS[lobby] = room.positions;
+      PLAYER_POKEMON[lobby] = room.pokemon;
+      PLAYER_NAMES[lobby] = room.names;
+      GAME_TURN[lobby] = 1;
+    } else if(room.action === "joinDisconnect") {
+      let keys = Object.keys(PLAYER_COUNTER);
+      if (keys.includes(lobby) && PLAYER_COUNTER[lobby] < 9) {
+        PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
+      }
+      io.to(lobby).emit("joined", {
+        positions: PLAYER_POSITIONS[lobby],
+        pokemon: PLAYER_POKEMON[lobby],
+        names: PLAYER_NAMES[lobby]
+      });
+    }
+      else {
       let keys = Object.keys(PLAYER_COUNTER);
       if (keys.includes(lobby) && PLAYER_COUNTER[lobby] < 9) {
         PLAYER_COUNTER[lobby] = PLAYER_COUNTER[lobby] + 1;
