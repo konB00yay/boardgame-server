@@ -4,7 +4,7 @@ const http = require("http").createServer(app);
 const path = require("path");
 let url = "http://localhost:3000";
 if (process.env.NODE_ENV === "production") {
-  url = "https://vast-reaches-79428.herokuapp.com/"
+  url = "http://www.pkmndrinkinggame.com";
   app.use(express.static(path.join(__dirname, "build")));
   app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
