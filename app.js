@@ -1,15 +1,23 @@
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
-const io = require("socket.io")(http, { pingTimeout: 600000 });
 const path = require("path");
-
+let url = "http://localhost:3000";
 if (process.env.NODE_ENV === "production") {
+  url = "https://vast-reaches-79428.herokuapp.com/"
   app.use(express.static(path.join(__dirname, "build")));
   app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
   });
 }
+
+const io = require("socket.io")(http, { 
+  pingTimeout: 600000,
+  cors: {
+    origin: url,
+    methods: ["GET", "POST"]
+  }
+});
 
 let port = process.env.PORT || 4000;
 
@@ -27,7 +35,7 @@ function resetRoom(roomId) {
   delete GAME_TURN[roomId];
 }
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   socket.on("rooms", room => {
     const lobby = room.id;
     socket.join(lobby);
