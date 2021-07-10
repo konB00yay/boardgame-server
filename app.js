@@ -26,6 +26,7 @@ var PLAYER_POSITIONS = {};
 var PLAYER_POKEMON = {};
 var PLAYER_NAMES = {};
 var GAME_TURN = {};
+var GEN = {};
 
 function resetRoom(roomId) {
   delete PLAYER_COUNTER[roomId];
@@ -33,6 +34,7 @@ function resetRoom(roomId) {
   delete PLAYER_POSITIONS[roomId];
   delete PLAYER_NAMES[roomId];
   delete GAME_TURN[roomId];
+  delete GEN[roomId];
 }
 
 io.on("connection", (socket) => {
@@ -48,6 +50,7 @@ io.on("connection", (socket) => {
       PLAYER_POKEMON[lobby][1] = null;
       PLAYER_NAMES[lobby][1] = null;
       GAME_TURN[lobby] = 1;
+      GEN[lobby] = room.gen;
       setTimeout(resetRoom, 5 * 60 * 60 * 1000, lobby);
     }else if(room.action === "createDisconnect"){
       PLAYER_COUNTER[lobby] = 1;
@@ -63,7 +66,8 @@ io.on("connection", (socket) => {
       io.to(lobby).emit("joined", {
         positions: PLAYER_POSITIONS[lobby],
         pokemon: PLAYER_POKEMON[lobby],
-        names: PLAYER_NAMES[lobby]
+        names: PLAYER_NAMES[lobby],
+        gen: GEN[lobby]
       });
     }
       else {
@@ -87,7 +91,8 @@ io.on("connection", (socket) => {
       positions: PLAYER_POSITIONS[room],
       pokemon: PLAYER_POKEMON[room],
       names: PLAYER_NAMES[room],
-      turn: GAME_TURN[room]
+      turn: GAME_TURN[room],
+      gen: GEN[room]
     });
   });
 
@@ -96,7 +101,8 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("moved", {
       positions: PLAYER_POSITIONS[data.room],
       battling: data.battling,
-      caterpie: data.caterpie
+      caterpie: data.caterpie,
+      reversed: data.reversed
     });
   });
 
